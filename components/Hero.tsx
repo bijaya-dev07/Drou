@@ -4,24 +4,30 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import Image from "next/image";
 
+import appleWatch from "@/public/apple-watch.png";
+
 export default function Hero() {
   const textRef = useRef(null);
   const imageRef = useRef(null);
 
   useEffect(() => {
-    const tl = gsap.timeline();
-    
-    tl.fromTo(
-      ".hero-text-child",
-      { y: 50, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out", delay: 0.5 }
-    )
-    .fromTo(
-      imageRef.current,
-      { scale: 0.8, opacity: 0, x: 100 },
-      { scale: 1, opacity: 1, x: 0, duration: 1.5, ease: "power4.out" },
-      "-=0.5"
-    );
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline();
+      
+      tl.fromTo(
+        ".hero-text-child",
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out", delay: 0.5 }
+      )
+      .fromTo(
+        imageRef.current,
+        { scale: 0.8, opacity: 0, x: 100 },
+        { scale: 1, opacity: 1, x: 0, duration: 1.5, ease: "power4.out" },
+        "-=0.5"
+      );
+    });
+
+    return () => ctx.revert();
   }, []);
 
   return (
@@ -45,14 +51,15 @@ export default function Hero() {
           </div>
         </div>
 
-        <div ref={imageRef} className="relative aspect-square md:aspect-auto h-[400px] md:h-[600px] flex items-center justify-center">
+        <div ref={imageRef} className="relative w-full h-[400px] md:h-[600px] flex items-center justify-center">
           {/* Decorative background circle */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-white rounded-full opacity-50 blur-3xl -z-10" />
           
-          <img 
-            src="https://images.unsplash.com/photo-1546868891-fb4569947926?q=80&w=1000&auto=format&fit=crop" 
+          <Image
+            src={appleWatch} 
             alt="Apple Watch"
-            className="w-full h-full object-contain drop-shadow-2xl"
+            priority
+            className="w-full h-full object-contain drop-shadow-2xl relative z-10"
           />
         </div>
       </div>
