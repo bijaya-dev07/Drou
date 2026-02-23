@@ -112,5 +112,3 @@ Contributions are welcome! If you have suggestions for new features or find any 
 Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
-
-**Built with ❤️ by [Your Name]**
